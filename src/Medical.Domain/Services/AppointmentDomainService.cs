@@ -73,16 +73,22 @@ namespace Medical.Domain.Services
         }
 
         ///<inheritdoc/>
-        public async Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Doctor doctor, DateTime dateTime)
-            => (await _appointmentRepository
-                .GetByExpressionAsync(x =>
-                    x.DoctorId == doctor.Id &
-                    x.DateTime.Date >= dateTime.Date))
-                .ToList();
+        public async Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Doctor doctor, DateTime dateTime, CancellationToken cancellationToken = default)
+        {
+            IQueryable<Appointment> query = await _appointmentRepository.GetByExpressionAsync(x => x.DoctorId == doctor.Id && x.DateTime.Date >= dateTime.Date, cancellationToken);
+            if (cancellationToken.IsCancellationRequested)
+                return null;
+            return query.ToList();
+        }
 
         ///<inheritdoc/>
-        public async Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Doctor doctor)
-            => await ListSchedulesForDoctor(doctor, DateTime.Now);
+        public async Task<IEnumerable<Appointment>> ListSchedulesForPatient(Patient patient, DateTime dateTime, CancellationToken cancellationToken = default)
+        {
+            IQueryable<Appointment> query = await _appointmentRepository.GetByExpressionAsync(x => x.PatientId == patient.Id && x.DateTime.Date >= dateTime.Date, cancellationToken);
+            if (cancellationToken.IsCancellationRequested)
+                return null;
+            return query.ToList();
+        }
 
 
 

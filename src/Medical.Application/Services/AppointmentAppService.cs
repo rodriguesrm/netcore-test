@@ -1,4 +1,5 @@
-﻿using Medical.Application.Models;
+﻿using Medical.Application.Maps;
+using Medical.Application.Models;
 using Medical.CrossCutting.Common.Configs;
 using Medical.CrossCutting.Common.Services;
 using Medical.Domain.Entities;
@@ -6,6 +7,7 @@ using Medical.Domain.Models;
 using Medical.Domain.Services;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -98,6 +100,58 @@ namespace Medical.Application.Services
             return result;
 
         }
+
+        ///<inheritdoc/>
+        public async Task<ListSchedulesAppointmentForDoctorResult> ListSchedulesForDoctor(Guid doctorId, DateTime dateTime, CancellationToken cancellationToken = default)
+        {
+
+            ListSchedulesAppointmentForDoctorResult result = new ListSchedulesAppointmentForDoctorResult();
+
+            Doctor doctor = await _doctorDomain.GetByIdAsync(doctorId);
+            if (doctor != null)
+                result.Messages.Add("doctorId", "Doctor not found");
+
+
+            if (result.Valid)
+            {
+                IEnumerable<Appointment> resp = await _domainService.ListSchedulesForDoctor(doctor, dateTime.Date, cancellationToken);
+                result.Sucess = true;
+                result.Appointments = resp.Select(s => s.MapToDoctorResult());
+                
+            }
+            return result;
+
+        }
+
+        ///<inheritdoc/>
+        public async Task<ListSchedulesAppointmentForDoctorResult> ListSchedulesForDoctor(Guid doctorId, CancellationToken cancellationToken = default)
+            => await ListSchedulesForDoctor(doctorId, DateTime.Now, cancellationToken);
+
+        ///<inheritdoc/>
+        public async Task<ListSchedulesAppointmentForPatientResult> ListSchedulesForPatient(Guid patientId, DateTime dateTime, CancellationToken cancellationToken = default)
+        {
+
+            ListSchedulesAppointmentForPatientResult result = new ListSchedulesAppointmentForPatientResult();
+
+            Patient patient = await _patientDomain.GetByIdAsync(patientId);
+            if (patient != null)
+                result.Messages.Add("patientId", "Patient not found");
+
+
+            if (result.Valid)
+            {
+                IEnumerable<Appointment> resp = await _domainService.ListSchedulesForPatient(patient, dateTime.Date, cancellationToken);
+                result.Sucess = true;
+                result.Appointments = resp.Select(s => s.MapToPatientResult());
+
+            }
+            return result;
+
+        }
+
+        ///<inheritdoc/>
+        public async Task<ListSchedulesAppointmentForPatientResult> ListSchedulesForPatient(Guid patientId, CancellationToken cancellationToken = default)
+            => await ListSchedulesForPatient(patientId, DateTime.Now, cancellationToken);
 
         #endregion
 

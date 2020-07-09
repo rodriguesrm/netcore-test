@@ -28,13 +28,16 @@ namespace Medical.Domain.Services
         /// </summary>
         /// <param name="doctor">Doctor object instance</param>
         /// <param name="dateTime">Date/time to list</param>
-        Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Doctor doctor, DateTime dateTime);
+        /// <param name="cancellationToken">Cancelation token</param>
+        Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Doctor doctor, DateTime dateTime, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List a doctor's appointments from today
+        /// List a patient's appointments from the date informed
         /// </summary>
-        /// <param name="doctor">Doctor object instance</param>
-        Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Doctor doctor);
+        /// <param name="patient">Patient object instance</param>
+        /// <param name="dateTime">Date/time to list</param>
+        /// <param name="cancellationToken">Cancelation token</param>
+        Task<IEnumerable<Appointment>> ListSchedulesForPatient(Patient patient, DateTime dateTime, CancellationToken cancellationToken = default);
 
     }
 }
