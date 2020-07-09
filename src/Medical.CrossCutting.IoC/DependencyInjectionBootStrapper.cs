@@ -50,7 +50,6 @@ namespace Medical.CrossCutting.IoC
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddScoped<IAppClientRepository, AppClientRepository>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IPatientRepository, PatientRepository>();
@@ -60,7 +59,6 @@ namespace Medical.CrossCutting.IoC
 
             #region Domain
 
-            services.AddScoped<IAppClientDomainService, AppClientDomainService>();
             services.AddScoped<IAppointmentDomainService, AppointmentDomainService>();
             services.AddScoped<IDoctorDomainService, DoctorDomainService>();
             services.AddScoped<IPatientDomainService, PatientDomainService>();
@@ -69,7 +67,6 @@ namespace Medical.CrossCutting.IoC
 
             #region Application
 
-            services.AddScoped<IAppClientAppService, AppClientAppService>();
             services.AddScoped<IAppointmentAppService, AppointmentAppService>();
 
             #endregion

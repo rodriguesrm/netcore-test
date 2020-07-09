@@ -47,7 +47,6 @@ namespace Medical.Infra.Data
         /// <param name="modelBuilder"></param>
         private void SetTableConfiguration(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new AppClientConfiguration());
             modelBuilder.ApplyConfiguration(new DoctorConfiguration());
             modelBuilder.ApplyConfiguration(new PatientConfiguration());
             modelBuilder.ApplyConfiguration(new AppointmentConfiguration());
@@ -58,14 +57,9 @@ namespace Medical.Infra.Data
         #region DbSets
 
         /// <summary>
-        /// Application clients entity collection
-        /// </summary>
-        public virtual DbSet<AppClient> AppClients { get; set; }
-
-        /// <summary>
         /// Doctorss entity collection
         /// </summary>
-        public virtual DbSet<Doctor> Doctorss { get; set; }
+        public virtual DbSet<Doctor> Doctors { get; set; }
 
         /// <summary>
         /// Patients entity collection

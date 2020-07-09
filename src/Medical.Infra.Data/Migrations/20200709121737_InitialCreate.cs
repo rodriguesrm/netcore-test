@@ -8,19 +8,6 @@ namespace Medical.Infra.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AppClient",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(unicode: false, maxLength: 100, nullable: false),
-                    Key = table.Column<string>(unicode: false, maxLength: 32, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AppClient", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Doctor",
                 columns: table => new
                 {
@@ -127,9 +114,6 @@ namespace Medical.Infra.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AppClient");
-
             migrationBuilder.DropTable(
                 name: "Appointment");
 

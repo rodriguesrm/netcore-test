@@ -4,9 +4,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Medical.CrossCutting.IoC;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Medical.Web.Api
 {
+
+    /// <summary>
+    /// Startup class object
+    /// </summary>
     public class Startup
     {
 
@@ -30,6 +35,8 @@ namespace Medical.Web.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors();
+            services.AddSwaggerConfig();
             services.AddMedicalAppService(Configuration);
         }
 
@@ -39,11 +46,24 @@ namespace Medical.Web.Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
+            else
+                app.UseHsts();
 
-            app.UseHttpsRedirection();
+            app.UseCors(c =>
+            {
+                c.AllowAnyHeader();
+                c.AllowAnyMethod();
+                c.AllowAnyOrigin();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = string.Empty;
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Medical Services");
+                c.SupportedSubmitMethods(new SubmitMethod[] { });
+            });
 
             app.UseRouting();
 
