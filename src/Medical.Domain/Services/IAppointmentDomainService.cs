@@ -11,30 +11,30 @@ namespace Medical.Domain.Services
     /// <summary>
     /// Appointment domain service interface
     /// </summary>
-    public interface IAppointmentDomainService
+    public interface IAppointmentDomainService : IDisposable
     {
 
         /// <summary>
         /// Schedule an appointment
         /// </summary>
-        /// <param name="doctorId">Doctor identification guid</param>
-        /// <param name="patientId">Patient identification guid</param>
+        /// <param name="doctor">Doctor object instance</param>
+        /// <param name="patient">Patient object instance</param>
         /// <param name="dateTime">Date/time to schedule</param>
         /// <param name="cancellationToken">Cancelation token</param>
-        Task<ScheduleResult> ScheduleAppointment(Guid doctorId, Guid patientId, DateTime dateTime, CancellationToken cancellationToken = default);
+        Task<ScheduleResult> ScheduleAppointment(Doctor doctor, Patient patient, DateTime dateTime, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List a doctor's appointments from the date informed
         /// </summary>
-        /// <param name="doctorId">Doctor identification guid</param>
+        /// <param name="doctor">Doctor object instance</param>
         /// <param name="dateTime">Date/time to list</param>
-        Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Guid doctorId, DateTime dateTime);
+        Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Doctor doctor, DateTime dateTime);
 
         /// <summary>
         /// List a doctor's appointments from today
         /// </summary>
-        /// <param name="doctorId">Doctor identification guid</param>
-        Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Guid doctorId);
+        /// <param name="doctor">Doctor object instance</param>
+        Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Doctor doctor);
 
     }
 }

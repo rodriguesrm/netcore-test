@@ -1,4 +1,6 @@
-﻿using Medical.CrossCutting.Common.Services;
+﻿using Medical.Application.Services;
+using Medical.CrossCutting.Common.Configs;
+using Medical.CrossCutting.Common.Services;
 using Medical.Domain.Services;
 using Medical.Infra.Data;
 using Medical.Infra.Data.Repositories;
@@ -23,6 +25,14 @@ namespace Medical.CrossCutting.IoC
         /// <param name="options">Configuration options</param>
         public static IServiceCollection AddMedicalAppService(this IServiceCollection services, IConfiguration configuration)
         {
+
+            #region Configs
+
+            services.Configure<AppConfig>(configuration.Bind);
+            services.Configure<ConnectionStringsConfig>(configuration.Bind);
+            services.Configure<OpeningHoursConfig>(configuration.Bind);
+
+            #endregion
 
             #region DbContext
 
@@ -52,12 +62,15 @@ namespace Medical.CrossCutting.IoC
 
             services.AddScoped<IAppClientDomainService, AppClientDomainService>();
             services.AddScoped<IAppointmentDomainService, AppointmentDomainService>();
+            services.AddScoped<IDoctorDomainService, DoctorDomainService>();
+            services.AddScoped<IPatientDomainService, PatientDomainService>();
 
             #endregion
 
             #region Application
 
-            //services.AddScoped<ITransactionApplicationService, TransactionApplicationService>();
+            services.AddScoped<IAppClientAppService, AppClientAppService>();
+            services.AddScoped<IAppointmentAppService, AppointmentAppService>();
 
             #endregion
 

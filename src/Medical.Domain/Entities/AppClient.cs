@@ -14,11 +14,6 @@ namespace Medical.Domain.Entities
         #region Properties
 
         /// <summary>
-        /// Custom identification GUID
-        /// </summary>
-        public Guid? Id { get; set; }
-
-        /// <summary>
         /// AppClient Name
         /// </summary>
         public string Name { get; set; }

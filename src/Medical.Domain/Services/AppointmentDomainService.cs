@@ -17,9 +17,7 @@ namespace Medical.Domain.Services
 
         #region Local objects/variables
 
-        private readonly IAppointmentRepository _appointmentRepository;
-        private readonly IDoctorRepository _doctorRepository;
-        private readonly IPatientRepository _patientRepository;
+        private IAppointmentRepository _appointmentRepository;
 
         #endregion
 
@@ -30,14 +28,10 @@ namespace Medical.Domain.Services
         /// </summary>
         public AppointmentDomainService
         (
-            IAppointmentRepository appointmentRepository,
-            IDoctorRepository doctorRepository,
-            IPatientRepository patientRepository
+            IAppointmentRepository appointmentRepository
         )
         {
             _appointmentRepository = appointmentRepository;
-            _doctorRepository = doctorRepository;
-            _patientRepository = patientRepository;
         }
 
         #endregion
@@ -45,28 +39,22 @@ namespace Medical.Domain.Services
         #region Public methods
 
         ///<inheritdoc/>
-        public async Task<ScheduleResult> ScheduleAppointment(Guid doctorId, Guid patientId, DateTime dateTime, CancellationToken cancellationToken = default)
+        public async Task<ScheduleResult> ScheduleAppointment(Doctor doctor, Patient patient, DateTime dateTime, CancellationToken cancellationToken = default)
         {
 
             // Find doctor;patient
-            Doctor doctor = await _doctorRepository.GetByIdAsync(doctorId, cancellationToken);
             if (doctor == null)
-            {
-                return new ScheduleResult("Doctor not found");
-            }
+                throw new ArgumentNullException("doctor");
 
-            Patient patient = await _patientRepository.GetByIdAsync(patientId, cancellationToken);
             if (patient == null)
-            {
-                return new ScheduleResult("Patient not found");
-            }
+                throw new ArgumentNullException("patient");
 
             // Check schedule is free
             Appointment checkAppointment = (
                 await _appointmentRepository.GetByExpressionAsync(x =>
-                    x.DoctorId == doctorId &&
+                    x.DoctorId == doctor.Id &&
                     x.DateTime == dateTime
-                )).FirstOrDefault();
+                , cancellationToken)).FirstOrDefault();
 
             if (checkAppointment != null)
             {
@@ -75,8 +63,8 @@ namespace Medical.Domain.Services
 
             Appointment appointment = await _appointmentRepository.AddAsync(new Appointment()
             {
-                DoctorId = doctorId,
-                PatientId = patientId,
+                DoctorId = doctor.Id,
+                PatientId = patient.Id,
                 DateTime = dateTime
             }, cancellationToken);
 
@@ -84,25 +72,59 @@ namespace Medical.Domain.Services
 
         }
 
+        ///<inheritdoc/>
+        public async Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Doctor doctor, DateTime dateTime)
+            => (await _appointmentRepository
+                .GetByExpressionAsync(x =>
+                    x.DoctorId == doctor.Id &
+                    x.DateTime.Date >= dateTime.Date))
+                .ToList();
+
+        ///<inheritdoc/>
+        public async Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Doctor doctor)
+            => await ListSchedulesForDoctor(doctor, DateTime.Now);
+
+
+
+        #endregion
+
+        #region IDisposable Support
+
+        private bool disposedValue;
+
         /// <summary>
-        /// List a doctor's appointments from the date informed
+        /// Release resources
         /// </summary>
-        /// <param name="doctorId">Doctor identification guid</param>
-        /// <param name="dateTime">Date/time to list</param>
-        public async Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Guid doctorId, DateTime dateTime)
+        /// <param name="disposing">Dispose object flags</param>
+        protected virtual void Dispose(bool disposing)
         {
-            throw new NotImplementedException();
-            //TODO: NotImplementedException
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _appointmentRepository?.Dispose();
+                }
+
+                _appointmentRepository = null;
+                disposedValue = true;
+            }
         }
 
         /// <summary>
-        /// List a doctor's appointments from today
+        /// override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
         /// </summary>
-        /// <param name="doctorId">Doctor identification guid</param>
-        public async Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Guid doctorId)
+        ~AppointmentDomainService()
         {
-            throw new NotImplementedException();
-            //TODO: NotImplementedException
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: false);
+        }
+
+        ///<inheritdoc/>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion

@@ -26,11 +26,31 @@ namespace Medical.Infra.Data.Migrations
             Guid patientId2 = new Guid("53A53E8A-F06A-4668-AC39-3CD344389564");
             Guid patientId3 = new Guid("D49051C4-ECC9-4893-B571-A104C34B450B");
 
+            Guid appClient1Id = new Guid("daccabea-546c-49ee-989b-9e4e49611419");
+            Guid appClient2Id = new Guid("ad4e2422-ea77-44ff-845e-122e03da9bbb");
+
+            string appClient1Key = "TcwGjXfxk77CDNjnsSa35bFLKmvaLBWc";
+            string appClient2Key = "B6TprSBX8cq85u653JAa2sxyR5c5WrLB";
+
             int year = DateTime.Now.Year;
             int month = DateTime.Now.Month;
             int day = DateTime.Now.Day + 1;
 
             migrationBuilder.Sql("exec sp_msforeachtable 'alter table ? nocheck constraint all'");
+
+            // Application client seed
+            migrationBuilder.InsertData
+            (
+                nameof(AppClient),
+                new string[] { nameof(AppClient.Id), nameof(AppClient.Name), nameof(AppClient.Key) },
+                new object[] { appClient1Id, "Company A", appClient1Key }
+            );
+            migrationBuilder.InsertData
+            (
+                nameof(AppClient),
+                new string[] { nameof(AppClient.Id), nameof(AppClient.Name), nameof(AppClient.Key) },
+                new object[] { appClient2Id, "Company B", appClient2Key }
+            );
 
             // Doctor seed
             migrationBuilder.InsertData
