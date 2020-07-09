@@ -11,6 +11,6 @@ namespace Medical.Infra.Data.Repositories
     {
 
         ///<inheritdoc/>
-        public AppClientRepository(MedicalContext ctx) : base(ctx) { }
+        public AppClientRepository(MedicalDbContext ctx) : base(ctx) { }
     }
 }

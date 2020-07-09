@@ -2,6 +2,7 @@
 using Medical.Domain.Services;
 using Medical.Infra.Data;
 using Medical.Infra.Data.Repositories;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +26,7 @@ namespace Medical.CrossCutting.IoC
 
             #region DbContext
 
-            services.AddDbContext<MedicalContext>(opt =>
+            services.AddDbContext<MedicalDbContext>(opt =>
             {
                 opt
                     .UseSqlServer(configuration.GetConnectionString("DbServer"))
@@ -62,6 +63,21 @@ namespace Medical.CrossCutting.IoC
 
             return services;
 
+        }
+
+        /// <summary>
+        /// Execute migration in database
+        /// </summary>
+        /// <param name="app">Application builder object</param>
+        public static IApplicationBuilder MigrateDatabase(this IApplicationBuilder app)
+        {
+            using (IServiceScope serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                using var context = serviceScope.ServiceProvider.GetService<MedicalDbContext>();
+                context.Database.Migrate();
+            }
+
+            return app;
         }
 
     }

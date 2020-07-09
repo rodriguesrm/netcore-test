@@ -11,6 +11,6 @@ namespace Medical.Infra.Data.Repositories
     {
 
         ///<inheritdoc/>
-        public AppointmentRepository(MedicalContext ctx) : base(ctx) { }
+        public AppointmentRepository(MedicalDbContext ctx) : base(ctx) { }
     }
 }

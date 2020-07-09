@@ -44,12 +44,12 @@ namespace Medical.Domain.Entities
         /// <summary>
         /// Doctor data information
         /// </summary>
-        public Doctor Doctor { get; set; }
+        public virtual Doctor Doctor { get; set; }
 
         /// <summary>
         /// Patient data information
         /// </summary>
-        public Patient Patient { get; set; }
+        public virtual Patient Patient { get; set; }
 
         #endregion
 

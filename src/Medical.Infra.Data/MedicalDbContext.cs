@@ -9,7 +9,7 @@ namespace Medical.Infra.Data
     /// <summary>
     /// Database context
     /// </summary>
-    public class MedicalContext : DbContext
+    public class MedicalDbContext : DbContext
     {
 
         #region Constructors
@@ -18,7 +18,7 @@ namespace Medical.Infra.Data
         /// Initializes a new instance of the Microsoft.EntityFrameworkCore.DbContext class using the specified options
         /// </summary>
         /// <param name="options">The options for this context</param>
-        public MedicalContext(DbContextOptions<MedicalContext> options) : base(options) { }
+        public MedicalDbContext(DbContextOptions<MedicalDbContext> options) : base(options) { }
 
         #endregion
 

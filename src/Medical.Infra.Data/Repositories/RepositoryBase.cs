@@ -24,7 +24,7 @@ namespace Medical.Infra.Data.Repositories
         /// <summary>
         /// DbContext object
         /// </summary>
-        protected MedicalContext _ctx;
+        protected MedicalDbContext _ctx;
 
         /// <summary>
         /// DbSet object
@@ -38,7 +38,7 @@ namespace Medical.Infra.Data.Repositories
         /// <summary>
         /// Create a new repository instance object
         /// </summary>
-        public RepositoryBase(MedicalContext ctx)
+        public RepositoryBase(MedicalDbContext ctx)
         {
             _ctx = ctx;
             _dbSet = _ctx.Set<TEntity>();

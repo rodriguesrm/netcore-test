@@ -27,7 +27,7 @@ namespace Medical.Infra.Data
         /// Create a new object intantance
         /// </summary>
         /// <param name="ctx">Database context</param>
-        public UnitOfWork(MedicalContext ctx)
+        public UnitOfWork(MedicalDbContext ctx)
         {
             _ctx = ctx;
             TransactionStarted = false;

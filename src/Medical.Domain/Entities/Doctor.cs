@@ -1,7 +1,6 @@
 ﻿using Medical.CrossCutting.Common.Contracts;
 using Medical.CrossCutting.Common.Entities;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Medical.Domain.Entities

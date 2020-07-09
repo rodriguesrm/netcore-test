@@ -54,7 +54,7 @@ namespace Medical.Web.Api
                 endpoints.MapControllers();
             });
 
-            //app.MigrateDatabase();
+            app.MigrateDatabase();
 
         }
     }
