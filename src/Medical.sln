@@ -15,15 +15,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5-Cross", "5-Cross", "{A2A1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9-Tests", "9-Tests", "{2A6B0774-6258-420D-879D-85B04E586ECC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medical.Domain", "Medical.Domain\Medical.Domain.csproj", "{E8E22F77-9441-493C-B9C6-13B93A6B2687}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Domain", "Medical.Domain\Medical.Domain.csproj", "{E8E22F77-9441-493C-B9C6-13B93A6B2687}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medical.CrossCutting.Common", "Medical.CrossCutting.Common\Medical.CrossCutting.Common.csproj", "{F02E3FE5-ACD6-4CE5-ABB4-60AC19CF9D36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.CrossCutting.Common", "Medical.CrossCutting.Common\Medical.CrossCutting.Common.csproj", "{F02E3FE5-ACD6-4CE5-ABB4-60AC19CF9D36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medical.Infra.Data", "Medical.Infra.Data\Medical.Infra.Data.csproj", "{E477528A-BDC5-42FF-B9C6-2BCA861CCE71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Infra.Data", "Medical.Infra.Data\Medical.Infra.Data.csproj", "{E477528A-BDC5-42FF-B9C6-2BCA861CCE71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medical.CrossCutting.IoC", "Medical.CrossCutting.IoC\Medical.CrossCutting.IoC.csproj", "{D79CE993-53C1-4F0E-AD10-160FC3D3D07C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.CrossCutting.IoC", "Medical.CrossCutting.IoC\Medical.CrossCutting.IoC.csproj", "{D79CE993-53C1-4F0E-AD10-160FC3D3D07C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medical.Application", "Medical.Application\Medical.Application.csproj", "{14136C4C-2E2E-4348-8770-98309597F5B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Application", "Medical.Application\Medical.Application.csproj", "{14136C4C-2E2E-4348-8770-98309597F5B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medical.Web.Api", "Medical.Web.Api\Medical.Web.Api.csproj", "{2F3680A5-E7DE-4F7E-8D1E-644EDC447B45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,18 @@ Global
 		{14136C4C-2E2E-4348-8770-98309597F5B3}.Release|x64.Build.0 = Release|Any CPU
 		{14136C4C-2E2E-4348-8770-98309597F5B3}.Release|x86.ActiveCfg = Release|Any CPU
 		{14136C4C-2E2E-4348-8770-98309597F5B3}.Release|x86.Build.0 = Release|Any CPU
+		{2F3680A5-E7DE-4F7E-8D1E-644EDC447B45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F3680A5-E7DE-4F7E-8D1E-644EDC447B45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F3680A5-E7DE-4F7E-8D1E-644EDC447B45}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2F3680A5-E7DE-4F7E-8D1E-644EDC447B45}.Debug|x64.Build.0 = Debug|Any CPU
+		{2F3680A5-E7DE-4F7E-8D1E-644EDC447B45}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2F3680A5-E7DE-4F7E-8D1E-644EDC447B45}.Debug|x86.Build.0 = Debug|Any CPU
+		{2F3680A5-E7DE-4F7E-8D1E-644EDC447B45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F3680A5-E7DE-4F7E-8D1E-644EDC447B45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F3680A5-E7DE-4F7E-8D1E-644EDC447B45}.Release|x64.ActiveCfg = Release|Any CPU
+		{2F3680A5-E7DE-4F7E-8D1E-644EDC447B45}.Release|x64.Build.0 = Release|Any CPU
+		{2F3680A5-E7DE-4F7E-8D1E-644EDC447B45}.Release|x86.ActiveCfg = Release|Any CPU
+		{2F3680A5-E7DE-4F7E-8D1E-644EDC447B45}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +119,7 @@ Global
 		{E477528A-BDC5-42FF-B9C6-2BCA861CCE71} = {FF00821C-F1AD-4D5A-AEBD-6F3B17AB2685}
 		{D79CE993-53C1-4F0E-AD10-160FC3D3D07C} = {A2A11A80-9AAC-4B6C-828F-F7CEE1416067}
 		{14136C4C-2E2E-4348-8770-98309597F5B3} = {38006AAF-9315-41FB-A618-BBB8AACE4EF5}
+		{2F3680A5-E7DE-4F7E-8D1E-644EDC447B45} = {6DBDA044-E350-421B-84E0-3C7E69706068}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C83716D1-3E9F-482F-B13E-EB6414782429}
