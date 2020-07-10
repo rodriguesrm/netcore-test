@@ -69,6 +69,8 @@ namespace Medical.Web.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Medical Services");
             });
 
+            app.UseMiddleware<Middleware.RequestResponseLogging>();
+
             app.UseRouting();
 
             app.UseAuthorization();

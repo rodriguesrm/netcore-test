@@ -1,5 +1,6 @@
 ﻿using Medical.Application.Services;
 using Medical.CrossCutting.Common.Configs;
+using Medical.CrossCutting.Common.Log;
 using Medical.CrossCutting.Common.Services;
 using Medical.Domain.Services;
 using Medical.Infra.Data;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 namespace Medical.CrossCutting.IoC
 {
@@ -31,6 +33,13 @@ namespace Medical.CrossCutting.IoC
             services.Configure<AppConfig>(configuration.Bind);
             services.Configure<ConnectionStringsConfig>(configuration.GetSection("ConnectionStrings").Bind);
             services.Configure<OpeningHoursConfig>(configuration.GetSection("OpeningHours").Bind);
+
+            #endregion
+
+            #region Logs
+
+            services.AddScoped<ILoggerFactory, AppLoggerFactory>();
+            services.AddScoped<ILogger>(x => x.GetService<ILoggerFactory>().Create());
 
             #endregion
 
