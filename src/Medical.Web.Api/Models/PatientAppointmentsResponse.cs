@@ -1,23 +1,23 @@
 ﻿using System;
 
-namespace Medical.Application.Models
+namespace Medical.Web.Api.Models
 {
 
     /// <summary>
-    /// Scheduler list result for Patient
+    /// Patient appointment response
     /// </summary>
-    public class AppointmentForPatientResult
+    public class PatientAppointmentsResponse
     {
 
         /// <summary>
-        /// Date/Time appointment scheduled
+        /// Appointment date/time
         /// </summary>
         public DateTime DateTime { get; set; }
 
         /// <summary>
         /// Patient data
         /// </summary>
-        public SingleIdentificationResult Doctor { get; set; }
+        public SimplePersonResponse Doctor { get; set; }
 
     }
 }

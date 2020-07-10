@@ -13,45 +13,45 @@ namespace Medical.Web.Api.Controllers
 {
 
     /// <summary>
-    /// Doctor api service
+    /// Patient api service
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    public class DoctorController : ControllerBase
+    public class PatientController : ControllerBase
     {
 
         /// <summary>
-        /// List doctor's appointments
+        /// List patient's appointments
         /// </summary>
         /// <param name="appService">Appointment application service</param>
-        /// <param name="doctorId">Doctor identification </param>
+        /// <param name="patientId">Patient identification </param>
         /// <param name="date">Date do start list (year-month-day only, not hour)</param>
         /// <param name="cancellationToken">Cancelletion task token</param>
         /// <response code="400">The request is invalid</response>
         /// <response code="200">Trasaction operation sucessful, return list appointments</response>
         [ProducesResponseType(typeof(IEnumerable<GenericNotificationResponse>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(IEnumerable<DoctorAppointmentsResponse>), StatusCodes.Status200OK)]
-        [HttpGet("{doctorId:guid}")]
-        public async Task<IActionResult> ListSchedules([FromServices] IAppointmentAppService appService, [FromRoute] Guid doctorId, [FromQuery] DateTime? date, CancellationToken cancellationToken = default)
+        [ProducesResponseType(typeof(IEnumerable<PatientAppointmentsResponse>), StatusCodes.Status200OK)]
+        [HttpGet("{patientId:guid}")]
+        public async Task<IActionResult> ListSchedules([FromServices] IAppointmentAppService appService, [FromRoute] Guid patientId, [FromQuery] DateTime? date, CancellationToken cancellationToken = default)
         {
 
-            ListSchedulesAppointmentForDoctorResult result;
+            ListSchedulesAppointmentForPatientResult result;
             if (date == null)
-                result = await appService.ListSchedulesForDoctor(doctorId, cancellationToken);
+                result = await appService.ListSchedulesForPatient(patientId, cancellationToken);
             else
-                result = await appService.ListSchedulesForDoctor(doctorId, date.Value, cancellationToken);
+                result = await appService.ListSchedulesForPatient(patientId, date.Value, cancellationToken);
 
             if (!result.Valid)
                 return BadRequest(Helpers.GetCriticals(result.Messages));
 
-            return Ok(result.Appointments.Select(s => new DoctorAppointmentsResponse()
+            return Ok(result.Appointments.Select(s => new PatientAppointmentsResponse()
             {
                 DateTime = s.DateTime,
-                Patient = new SimplePersonResponse()
+                Doctor = new SimplePersonResponse()
                 {
-                    Id = s.Patient.Id,
-                    FullName = s.Patient.FullName
+                    Id = s.Doctor.Id,
+                    FullName = s.Doctor.FullName
                 }
             }));
 
@@ -61,15 +61,15 @@ namespace Medical.Web.Api.Controllers
         /// Performs a schedule for a medical appointment
         /// </summary>
         /// <param name="appService">Appointment application service</param>
-        /// <param name="doctorId">Doctor identification id</param>
+        /// <param name="patientId">Patient identification id</param>
         /// <param name="request">Request data information</param>
         /// <param name="cancellationToken">Cancelletion task token</param>
         /// <response code="400">The request is invalid</response>
         /// <response code="201">Trasaction operation sucessful, return appointment id</response>
         [ProducesResponseType(typeof(IEnumerable<GenericNotificationResponse>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
-        [HttpPost("{doctorId:guid}/schedule")]
-        public async Task<IActionResult> ScheduleAppointment([FromServices] IAppointmentAppService appService, [FromRoute] Guid doctorId, [FromBody] DoctorScheduleAppointmentRequest request, CancellationToken cancellationToken = default)
+        [HttpPost("{patientId}/schedule")]
+        public async Task<IActionResult> ScheduleAppointment([FromServices] IAppointmentAppService appService, [FromRoute] Guid patientId, [FromBody] PatientScheduleAppointmentRequest request, CancellationToken cancellationToken = default)
         {
 
             if (!ModelState.IsValid)
@@ -78,8 +78,8 @@ namespace Medical.Web.Api.Controllers
 
             ScheduleAppointmentArgs args = new ScheduleAppointmentArgs()
             {
-                DoctorId = doctorId,
-                PatientId = request.PatientId.Value,
+                DoctorId = request.DoctorId.Value,
+                PatientId = patientId,
                 Date = request.Date.Value.Date,
                 Hour = request.Hour.Value,
                 Minute = request.Minute.Value

@@ -91,9 +91,10 @@ namespace Medical.Application.Services
                 result.Messages.Add("operation", resp.Message);
 
                 if (result.Sucess)
+                {
                     await _work.SaveChangesAsync(cancellationToken);
-
-                result.AppointmentId = resp.Appointment.Id;
+                    result.AppointmentId = resp.Appointment.Id;
+                }
 
             }
 

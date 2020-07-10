@@ -33,7 +33,7 @@ namespace Medical.Application.Maps
             return new AppointmentForPatientResult()
             {
                 DateTime = appointment.DateTime,
-                Patient = new SingleIdentificationResult()
+                Doctor = new SingleIdentificationResult()
                 {
                     Id = appointment.Doctor.Id.Value,
                     FullName = appointment.Doctor.GetFullName()
