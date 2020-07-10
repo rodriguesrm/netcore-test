@@ -91,9 +91,10 @@ namespace Medical.Domain.Services
         public async Task<IEnumerable<Appointment>> ListSchedulesForPatient(Patient patient, DateTime dateTime, CancellationToken cancellationToken = default)
         {
             IQueryable<Appointment> query = await _appointmentRepository.GetByExpressionAsync(x => x.PatientId == patient.Id && x.DateTime.Date >= dateTime.Date, cancellationToken);
-            if (cancellationToken.IsCancellationRequested)
-                return null;
-            return query.ToList();
+            if (cancellationToken.IsCancellationRequested) return null;
+            return query
+                .OrderBy(o => o.DateTime)
+                .ToList();
         }
 
 
