@@ -73,12 +73,12 @@ namespace Medical.Application.Services
 
             if (!_config.Hours.Contains(args.Hour))
             {
-                result.Messages.Add("hour", $"Invalid hour -> valid values: {String.Join(',', _config.Hours)}");
+                result.Messages.Add("hour", $"Invalid hour -> valid values: {string.Join(',', _config.Hours)}");
             }
 
             if (!_config.Minutes.Contains(args.Minute))
             {
-                result.Messages.Add("minute", $"Invalid minute -> valid values: {String.Join(',', _config.Minutes)}");
+                result.Messages.Add("minute", $"Invalid minute -> valid values: {string.Join(',', _config.Minutes)}");
             }
 
             if (result.Valid)
