@@ -1,0 +1,33 @@
+version: '3.5'
+
+services:
+  
+  medicalservice:
+    container_name: MedicalService
+    build: 
+      context: .
+      dockerfile: Medical.Web.Api/Dockerfile
+    ports: 
+      - "5000:80"
+    environment:  
+      - ConnectionStrings:DbServer=Server=mssqlserver;Database=MedicalDb;User Id=sa;Password=Ms.SqlServer;
+    depends_on: 
+      - mssqlserver
+    networks: 
+      - netMsService
+
+  mssqlserver:
+    container_name: mssqlserver
+    image: microsoft/mssql-server-linux:2017-latest
+    restart: always
+    ports:
+        - "1433:1433"
+    environment:
+        SA_PASSWORD: "Ms.SqlServer"
+        ACCEPT_EULA: "Y"
+    networks: 
+      - netMsService
+
+networks: 
+  netMsService:
+    driver: bridge
