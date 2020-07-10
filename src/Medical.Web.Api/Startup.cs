@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Medical.CrossCutting.IoC;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Web.Api
 {
@@ -36,6 +37,11 @@ namespace Medical.Web.Api
         {
             services.AddControllers();
             services.AddCors();
+            services.AddResponseCaching();
+            services.Configure<ApiBehaviorOptions>(opt =>
+            {
+                opt.SuppressModelStateInvalidFilter = true;
+            });
             services.AddSwaggerConfig();
             services.AddMedicalAppService(Configuration);
         }
@@ -62,7 +68,6 @@ namespace Medical.Web.Api
             {
                 c.RoutePrefix = string.Empty;
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Medical Services");
-                c.SupportedSubmitMethods(new SubmitMethod[] { });
             });
 
             app.UseRouting();

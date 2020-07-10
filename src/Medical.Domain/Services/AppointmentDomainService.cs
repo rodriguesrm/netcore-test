@@ -50,16 +50,21 @@ namespace Medical.Domain.Services
                 throw new ArgumentNullException("patient");
 
             // Check schedule is free
-            Appointment checkAppointment = (
+            IEnumerable<Appointment> checkList = (
                 await _appointmentRepository.GetByExpressionAsync(x =>
-                    x.DoctorId == doctor.Id &&
-                    x.DateTime == dateTime
-                , cancellationToken)).FirstOrDefault();
+                    x.DateTime == dateTime &&
+                    (x.DoctorId == doctor.Id || x.PatientId == patient.Id)
+                , cancellationToken))
+                .ToList()
+                ;
 
-            if (checkAppointment != null)
-            {
-                return new ScheduleResult("Date/time not available");
-            }
+            Appointment checkSchedule = checkList.FirstOrDefault(x => x.PatientId == patient.Id);
+            if (checkSchedule != null)
+                return new ScheduleResult("Patient schedule conflict");
+
+            checkSchedule = checkList.FirstOrDefault(x => x.DoctorId == doctor.Id);
+            if (checkSchedule != null)
+                return new ScheduleResult("Date/time not available for this doctor");
 
             Appointment appointment = await _appointmentRepository.AddAsync(new Appointment()
             {
@@ -76,9 +81,10 @@ namespace Medical.Domain.Services
         public async Task<IEnumerable<Appointment>> ListSchedulesForDoctor(Doctor doctor, DateTime dateTime, CancellationToken cancellationToken = default)
         {
             IQueryable<Appointment> query = await _appointmentRepository.GetByExpressionAsync(x => x.DoctorId == doctor.Id && x.DateTime.Date >= dateTime.Date, cancellationToken);
-            if (cancellationToken.IsCancellationRequested)
-                return null;
-            return query.ToList();
+            if (cancellationToken.IsCancellationRequested) return null;
+            return query
+                .OrderBy(o => o.DateTime)
+                .ToList();
         }
 
         ///<inheritdoc/>

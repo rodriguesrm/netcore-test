@@ -29,8 +29,8 @@ namespace Medical.CrossCutting.IoC
             #region Configs
 
             services.Configure<AppConfig>(configuration.Bind);
-            services.Configure<ConnectionStringsConfig>(configuration.Bind);
-            services.Configure<OpeningHoursConfig>(configuration.Bind);
+            services.Configure<ConnectionStringsConfig>(configuration.GetSection("ConnectionStrings").Bind);
+            services.Configure<OpeningHoursConfig>(configuration.GetSection("OpeningHours").Bind);
 
             #endregion
 

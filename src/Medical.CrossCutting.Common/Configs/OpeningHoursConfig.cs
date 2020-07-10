@@ -12,12 +12,12 @@ namespace Medical.CrossCutting.Common.Configs
         /// <summary>
         /// Valid hours
         /// </summary>
-        public IEnumerable<int> Hours { get; set; }
+        public int[] Hours { get; set; }
 
         /// <summary>
         /// Valid minutes
         /// </summary>
-        public IEnumerable<int> Minutes { get; set; }
+        public int[] Minutes { get; set; }
 
     }
 }
