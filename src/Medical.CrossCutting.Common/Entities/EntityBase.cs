@@ -18,7 +18,7 @@ namespace Medical.CrossCutting.Common.Entities
         /// <summary>
         /// Create a new entity instance
         /// </summary>
-        protected EntityBase() 
+        protected EntityBase()
         {
             Id = Guid.NewGuid();
         }

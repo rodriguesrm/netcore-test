@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Medical.CrossCutting.Common.Configs
+﻿namespace Medical.CrossCutting.Common.Configs
 {
 
     /// <summary>

@@ -1,7 +1,7 @@
-﻿using Medical.Domain.Entities;
-using FluentValidator;
-using Microsoft.EntityFrameworkCore;
+﻿using FluentValidator;
+using Medical.Domain.Entities;
 using Medical.Infra.Data.Configurations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Medical.Infra.Data
 {

@@ -118,7 +118,7 @@ namespace Medical.Application.Services
                 IEnumerable<Appointment> resp = await _domainService.ListSchedulesForDoctor(doctor, dateTime.Date, cancellationToken);
                 result.Sucess = true;
                 result.Appointments = resp.Select(s => s.MapToDoctorResult());
-                
+
             }
             return result;
 

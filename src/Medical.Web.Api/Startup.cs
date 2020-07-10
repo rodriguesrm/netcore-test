@@ -1,13 +1,10 @@
+using Medical.CrossCutting.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Medical.CrossCutting.IoC;
-using Swashbuckle.AspNetCore.SwaggerUI;
-using Microsoft.AspNetCore.Mvc;
-using Castle.Core.Logging;
-using System;
 
 namespace Medical.Web.Api
 {

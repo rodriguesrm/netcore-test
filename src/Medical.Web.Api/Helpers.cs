@@ -1,9 +1,7 @@
 ﻿using Medical.Web.Api.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Medical.Web.Api
 {
